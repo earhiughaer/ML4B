@@ -20,12 +20,7 @@ accel_chart = alt.Chart(df).mark_line().encode(
 )
 
 # Erstellen Sie ein Streudiagramm der Position des Smartphones
-position_chart = alt.Chart(df).mark_circle().encode(
-    x="Longitude",
-    y="Latitude",
-    color=alt.Color("Timestamp", scale=alt.Scale(scheme="reds")),
-    size="Accuracy"
-).properties(
+position_chart = alt.Chart(data).mark_line().encode(x='time', y='x').properties(
     title="Flugbahn des Smartphones"
 )
 
