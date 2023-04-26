@@ -1,38 +1,35 @@
-import json
 import streamlit as st
-import plotly.express as px
+import pandas as pd
+import altair as alt
+import json
 
-
-# 1. Read the data from sample_data.json
-with open("sample_data.json", "r") as f:
+# Laden Sie die Sensordaten aus der JSON-Datei
+with open('test.json') as f:
     data = json.load(f)
 
+# Konvertieren Sie die Daten in ein Pandas DataFrame
+df = pd.json_normalize(data)
 
-def read_data(data):
+# Erstellen Sie ein Liniendiagramm der Beschleunigungsdaten
+accel_chart = alt.Chart(df).mark_line().encode(
+    x="Timestamp",
+    y="Acceleration",
+    color="Axis"
+).properties(
+    title="Beschleunigungsdaten des Smartphones"
+)
 
-    readings = {"times": [], "values": []}
+# Erstellen Sie ein Streudiagramm der Position des Smartphones
+position_chart = alt.Chart(df).mark_circle().encode(
+    x="Longitude",
+    y="Latitude",
+    color=alt.Color("Timestamp", scale=alt.Scale(scheme="reds")),
+    size="Accuracy"
+).properties(
+    title="Flugbahn des Smartphones"
+)
 
-    for entry in data:
-        if entry["sensor"] == "Microphone":
-            readings["times"].append(entry["seconds_elapsed"])
-            readings["values"].append(entry["dBFS"])
-
-    return readings
-
-
-def generate_plot(readings):
-
-    # create the plot with plotly
-    plot = px.line(readings, x="times", y="values")
-    return plot
-
-
-readings = read_data(data)
-
-# streamlit app that displays the sensor data
-st.title("Simple Streamlit Sensor App")
-
-# create the plot and display it
-if st.button("display data"):
-    plot = generate_plot(readings)
-    st.plotly_chart(plot)
+# Zeigen Sie die Diagramme in der Streamlit-Anwendung an
+st.title("Flugbahn des Smartphones")
+st.altair_chart(accel_chart, use_container_width=True)
+st.altair_chart(position_chart, use_container_width=True)
