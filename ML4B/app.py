@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
-# Laden Sie Ihre CSV-Dateien hier
+# abc Laden Sie Ihre CSV-Dateien hier
 data_file_1 = pd.read_csv("Mikrowelle.csv")
 data_file_2 = pd.read_csv("Katze.csv")
 data_file_3 = pd.read_csv("Mixer.csv")
