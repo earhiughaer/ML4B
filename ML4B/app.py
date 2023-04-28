@@ -12,7 +12,7 @@ data_file_2 = data_file_2.drop('time', axis=1)
 data_file_3 = data_file_3.drop('time', axis=1)
 data_file_4 = data_file_4.drop('time', axis=1)
 
-# Definieren Sie die Beschriftungen
+# Definieren Sie die Beschriftungen abcd
 label_options = ["Mixer", "Katze", "Gitarre", "Mikrowelle"]
 
 # Erstellen Sie die Streamlit-App
